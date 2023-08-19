@@ -1,0 +1,9 @@
+{
+  "name": "zeep-scripts",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "bin": {
+    "zeep-run": "run.mjs"
+  }
+}
