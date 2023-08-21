@@ -54,6 +54,9 @@ function injectEnvFiles(fileName, envName) {
 }
 
 export function getClientEnvironments() {
+    const NODE_ENV = process.env.NODE_ENV ?? 'development';
+    const ENV_TARGET = process.env.ENV_TARGET ?? process.env.npm_package_config_dotenv_target ?? 'web';
+
     const appEnv = Object.keys(process.env)
         .filter((key) => APP_ENV_PREFIX.test(key))
         .reduce((envs, key) => {
@@ -61,13 +64,19 @@ export function getClientEnvironments() {
             return envs;
         }, {});
 
-    const stringified = Object.keys(appEnv).reduce((envs, key) => {
-        envs[`process.env.${key}`] = raw[key];
+    const allEnvs = {
+        ...appEnv,
+        ENV_TARGET,
+        NODE_ENV,
+    };
+
+    const stringified = Object.keys(allEnvs).reduce((envs, key) => {
+        envs[`process.env.${key}`] = JSON.stringify(allEnvs[key]);
         return envs;
     }, {});
 
     return {
-        raw,
+        envs: allEnvs,
         stringified,
     }
 }

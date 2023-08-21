@@ -44,7 +44,7 @@ export function executeCommand(command, options = {}) {
     if (!noExit) {
         result = result.then((code) => {
             if (!Number.isNaN(code) && code !== 0) {
-                console.error('Error execute command!');
+                console.error('Error execute command!', code);
                 process.exit(code);
             }
 
