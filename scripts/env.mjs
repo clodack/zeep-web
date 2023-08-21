@@ -7,7 +7,7 @@ import fs from 'fs';
 import dotenv from 'dotenv';
 import dotenvExpand from 'dotenv-expand';
 
-import { ROOT_DIR, SCRIPTS_DIR } from './constants.js';
+import { APP_ENV_PREFIX } from './constants.js';
 import { resolveByCurentDir, resolveByRootDir } from './utils.mjs';
 
 /**
@@ -22,8 +22,6 @@ export function injectEnv(
     if (envTarget) {
         injectEnvFiles(`.env-${envTarget}`, envName);
     }
-
-    console.log('____aaaaaaaaaaaaaaa________')
 
     injectEnvFiles('.env', envName);
 }
@@ -53,4 +51,23 @@ function injectEnvFiles(fileName, envName) {
             dotenvExpand.expand(dotenv.config({ path: envFile }));
         }
     });
+}
+
+export function getClientEnvironments() {
+    const appEnv = Object.keys(process.env)
+        .filter((key) => APP_ENV_PREFIX.test(key))
+        .reduce((envs, key) => {
+            envs[key] = process.env[key];
+            return envs;
+        }, {});
+
+    const stringified = Object.keys(appEnv).reduce((envs, key) => {
+        envs[`process.env.${key}`] = raw[key];
+        return envs;
+    }, {});
+
+    return {
+        raw,
+        stringified,
+    }
 }

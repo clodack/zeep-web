@@ -11,10 +11,10 @@
   "workspaces": [
     "apps/*",
     "packages/*",
-    "scripts/*"
+    "scripts"
   ],
   "scripts": {
-    "start": "npm -w app-web start",
+    "start": "npm -w app-web run start",
     "preview": "npm -w app-web run preview",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
   },
