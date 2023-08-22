@@ -1,0 +1,1 @@
+export { createLogsController } from './logs';

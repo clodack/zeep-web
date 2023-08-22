@@ -10,7 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@clodack/fismi": "*"
+    "zeep-common": "*",
+    "zeep-sdk": "*"
   },
   "devDependencies": {
     "zeep-scripts": "*"

@@ -7,13 +7,13 @@ export type KeyValueStorage = Readonly<{
 }>;
 
 export type Store = {
-  storage: KeyValueStorage;
+  localStorage: KeyValueStorage;
   sessionStorage: KeyValueStorage;
 }
 
 export function createWebStorage(): Store {
   return {
-    storage: adapterWebStorage(localStorage),
+    localStorage: adapterWebStorage(localStorage),
     sessionStorage: adapterWebStorage(sessionStorage),
   }
 }

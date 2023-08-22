@@ -1,5 +1,2 @@
-import { Controller } from "rx-effects";
-
-export function createPlatformController() {
-
-}
+export * from './platformModule';
+export * from './platform';

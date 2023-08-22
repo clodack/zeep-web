@@ -1,12 +1,47 @@
-import { useState } from 'react'
+import { FC, useState, useEffect } from 'react';
+import { ModalsProvider } from '@salutejs/plasma-b2c';
+
+import { createZeepSDK, getPlatformModule } from 'zeep-sdk/src';
+
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import { GlobalContextProvider, useGlobalContext } from './shared/contexts/globalContext';
+import { GlobalStyles } from './shared/components/GlobalStyled';
 
-function App() {
+type InitSDKStatus = 'fail' | 'process' | 'success';
+
+const App: FC = () => {
+  const { setSDK, eventBus } = useGlobalContext();
   const [count, setCount] = useState(0);
+  const [processCreateSDK, setProcessCreateSDK] = useState(false);
+  const [status, setStatus] = useState<InitSDKStatus>('process');
 
-  console.log('____test', process.env, import.meta.env);
+  useEffect(() => {
+    if (processCreateSDK) return;
+
+    setProcessCreateSDK(true);
+    console.log('Start creating sdk....');
+
+    let destroy: (() => void) | undefined;
+
+    createZeepSDK()
+      .then((sdk) => {
+        console.log('SDK is created!');
+        setSDK(sdk);
+        setStatus('success');
+        destroy = sdk.destroy;
+      })
+      .catch((error) => {
+        console.error('Fail create SDK', error);
+        setStatus('fail');
+        eventBus({ type: 'error', payload: { title: 'fail create sdk' } });
+      });
+
+    return () => {
+      destroy?.();
+    }
+  }, [processCreateSDK, setSDK, eventBus]);
 
   return (
     <>
@@ -30,8 +65,30 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
+      <TestChild />
     </>
   )
 }
 
-export default App
+const TestChild: FC = () => {
+  const { sdk } = useGlobalContext();
+
+  useEffect(() => {
+    if (!sdk) return;
+
+    const platform = getPlatformModule(sdk);
+    console.log('____platform', platform);
+  }, [sdk]);
+  return null;
+}
+
+export const AppContainer: FC = () => {
+  return (
+    <GlobalContextProvider>
+      <ModalsProvider>
+        <GlobalStyles />
+        <App />
+      </ModalsProvider>
+    </GlobalContextProvider>
+  );
+}

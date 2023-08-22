@@ -12,7 +12,7 @@ export type Storage = Readonly<{
 }>;
 
 export type Storages = Readonly<{
-  storage: Storage;
+  localStorage: Storage;
   sessionStorage: Storage;
 }>;
 
@@ -44,7 +44,7 @@ export function createStorageController(): Controller<StoragesModule> {
 
   return {
     storages: {
-      storage: noopStorage,
+      localStorage: noopStorage,
       sessionStorage: noopStorage,
     },
     destroy: noop,

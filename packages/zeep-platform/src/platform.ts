@@ -1,5 +1,6 @@
-import { Storages } from './storage';
+import { Storage } from './storage';
 
-export type PlatformModule = {
-  storages: Storages;
+export type Platform = {
+  localStorage: Storage;
+  sessionStorage: Storage;
 };
