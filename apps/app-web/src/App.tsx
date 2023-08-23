@@ -1,7 +1,7 @@
 import { FC, useState, useEffect } from 'react';
 import { ModalsProvider } from '@salutejs/plasma-b2c';
 
-import { createZeepSDK, getPlatformModule } from 'zeep-sdk/src';
+import { createWebZeepSDK, getPlatformModule } from 'zeep-sdk-web/src';
 
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
@@ -14,34 +14,23 @@ type InitSDKStatus = 'fail' | 'process' | 'success';
 const App: FC = () => {
   const { setSDK, eventBus } = useGlobalContext();
   const [count, setCount] = useState(0);
-  const [processCreateSDK, setProcessCreateSDK] = useState(false);
   const [status, setStatus] = useState<InitSDKStatus>('process');
 
   useEffect(() => {
-    if (processCreateSDK) return;
-
-    setProcessCreateSDK(true);
     console.log('Start creating sdk....');
 
-    let destroy: (() => void) | undefined;
-
-    createZeepSDK()
+    createWebZeepSDK()
       .then((sdk) => {
         console.log('SDK is created!');
         setSDK(sdk);
         setStatus('success');
-        destroy = sdk.destroy;
       })
       .catch((error) => {
         console.error('Fail create SDK', error);
         setStatus('fail');
         eventBus({ type: 'error', payload: { title: 'fail create sdk' } });
       });
-
-    return () => {
-      destroy?.();
-    }
-  }, [processCreateSDK, setSDK, eventBus]);
+  }, [setSDK, eventBus]);
 
   return (
     <>

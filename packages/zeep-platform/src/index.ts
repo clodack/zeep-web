@@ -1,2 +1,2 @@
-export * from './platformModule';
+export * from './storage';
 export * from './platform';

@@ -1,20 +1,18 @@
-export type KeyValueStorage = Readonly<{
-  getItem: (key: string) => string | undefined;
-  setItem: (key: string, value: string) => void;
-  removeItem: (key: string) => void;
-  clear: () => void;
-  getKeys: () => ReadonlyArray<string>;
-}>;
+import noop from 'lodash/noop';
+import { Controller } from 'rx-effects';
+
+import { KeyValueStorage } from 'zeep-platform/src';
 
 export type Store = {
   localStorage: KeyValueStorage;
   sessionStorage: KeyValueStorage;
 }
 
-export function createWebStorage(): Store {
+export function createWebStorageController(): Controller<Store> {
   return {
     localStorage: adapterWebStorage(localStorage),
     sessionStorage: adapterWebStorage(sessionStorage),
+    destroy: noop,
   }
 }
 

@@ -1,10 +1,10 @@
-import { bindModule, createContainer, Container, token } from "ditox";
+import { createContainer, Container, token } from "ditox";
 import { Controller, createScope } from 'rx-effects';
 import { Observable } from "rxjs";
 import { enableMapSet } from 'immer';
 
 import { createEventBus } from 'zeep-common/src/events'
-import { PLATFORM_MODULE, Platform, PLATFORM_TOKEN } from 'zeep-platform/src';
+import { Platform, PLATFORM_TOKEN } from 'zeep-platform/src';
 
 enableMapSet();
 
@@ -36,10 +36,6 @@ export async function createZeepSDK(options?: ZeepSDKOptions): Promise<ZeepSDK> 
     container,
     event$: eventBus.event$,
     destroy: scope.destroy,
-  }
-
-  if (!container.hasToken(PLATFORM_MODULE.token)) {
-    bindModule(container, PLATFORM_MODULE, { scope: 'singleton' });
   }
 
   const platform = container.resolve(PLATFORM_TOKEN);

@@ -1,6 +1,10 @@
-import { Storage } from './storage';
+import { token } from 'ditox';
+
+import { KeyValueStorage } from './storage';
 
 export type Platform = {
-  localStorage: Storage;
-  sessionStorage: Storage;
+  localStorage: KeyValueStorage;
+  sessionStorage: KeyValueStorage;
 };
+
+export const PLATFORM_TOKEN = token<Platform>('platform');
