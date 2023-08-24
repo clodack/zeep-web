@@ -10,7 +10,7 @@ export type HttpClientRequest<
   body: RequestBody;
   url: string;
   method: string;
-  credentails: string;
+  credentials: string;
   mode: string;
   headers: HeadersInit;
   query: RequestQuery;

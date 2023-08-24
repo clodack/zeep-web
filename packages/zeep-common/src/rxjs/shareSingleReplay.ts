@@ -1,6 +1,6 @@
 import { Observable, shareReplay } from 'rxjs';
 
-export function sharewSingleReplay<S>(): (
+export function shareSingleReplay<S>(): (
   source$: Observable<S>,
 ) => Observable<S> {
   return (source$: Observable<S>) => {
