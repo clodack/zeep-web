@@ -2,7 +2,7 @@ import { Controller, createScope } from "rx-effects";
 
 import { Platform } from 'zeep-platform/src/platform';
 
-import { createLogsController } from './logs';
+import { createPageLayoutController } from './pageLayout';
 import { createWebStorageController } from './storage';
 import { createWindowDimensionsController } from './windowSizeController';
 
@@ -18,7 +18,10 @@ export function createPlatformController(): Controller<{ platform: Platform }> {
     createWindowDimensionsController(),
   );
 
-  scope.createController(() => createLogsController());
+  const {
+    breakpoints,
+    orientation,
+  } = scope.createController(() => createPageLayoutController(dimensions));
 
   return {
     platform: {
@@ -26,6 +29,9 @@ export function createPlatformController(): Controller<{ platform: Platform }> {
     
       localStorage,
       sessionStorage,
+
+      breakpoints,
+      orientation,
 
       windowDimensions: dimensions,
     },

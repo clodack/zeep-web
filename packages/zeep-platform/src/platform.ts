@@ -1,6 +1,8 @@
 import { token } from 'ditox';
 import { Query } from 'rx-effects';
+import { Observable } from 'rxjs';
 
+import { Breakpoints, Orientation } from './pageLayout';
 import { KeyValueStorage } from './storage';
 import { WindowDimensions } from './windowDimensions';
 
@@ -11,6 +13,9 @@ export type Platform = {
 
   localStorage: KeyValueStorage;
   sessionStorage: KeyValueStorage;
+
+  breakpoints: Observable<Breakpoints>;
+  orientation: Observable<Orientation>;
 
   windowDimensions: Query<WindowDimensions>;
 };
