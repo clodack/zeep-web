@@ -1,7 +1,10 @@
 import memoize from 'lodash/memoize';
 import noop from 'lodash/noop';
-import { createAction } from 'rx-effects';
-import { Observable } from 'rxjs';
+import { Action } from 'rx-effects';
+import { Observable, Subject } from 'rxjs';
+
+import { Mutable } from './utilityTypes';
+import { createCycleBuffer } from './collections';
 
 export type LogLevel = 'debug' | 'info' | 'warn' | 'error';
 
@@ -27,7 +30,42 @@ export type LogEvent = {
   tag: string;
   messages: ReadonlyArray<unknown>;
   meta?: LogMetadata;
+};let globalLogsMetadata: Mutable<LogMetadata> = Object.create(null);
+
+export const LOGS_META = {
+  set(key: string, value: string): void {
+    globalLogsMetadata[key] = value;
+  },
+
+  remove(key: string): void {
+    delete globalLogsMetadata[key];
+  },
+
+  clear(): void {
+    globalLogsMetadata = {};
+  },
 };
+
+// Cycled buffer of logger events
+const LOG_BUFFER_SIZE = 1000;
+const LOG_BUFFER = createCycleBuffer<LogEvent>(LOG_BUFFER_SIZE);
+let LOG_BUFFER_ENABLED = true;
+
+export function clearLogBuffer(): void {
+  LOG_BUFFER.clear();
+}
+
+export function getLogBuffer(): ReadonlyArray<LogEvent> {
+  return LOG_BUFFER.getItems();
+}
+
+export function enableLogBuffer(isEnabled: boolean): void {
+  LOG_BUFFER_ENABLED = isEnabled;
+
+  if (!isEnabled) {
+    clearLogBuffer();
+  }
+} 
 
 export const LOG_LEVEL_VALUES: ReadonlyArray<LogLevel> = [
   'debug',
@@ -56,7 +94,27 @@ export const EMPTY_LOGGER: Logger = {
   messages$: new Observable(),
 };
 
-export const logMessage = createAction<LogEvent>();
+export const logMessage: Action<LogEvent> = createLogMessageAction();
+
+function createLogMessageAction(): Action<LogEvent> {
+  const source$ = new Subject<LogEvent>();
+
+  const emitter = (event: LogEvent): void => {
+    const eventWithMeta = {
+      ...event,
+      meta: { ...globalLogsMetadata, ...event.meta },
+    };
+
+    if (LOG_BUFFER_ENABLED) {
+      LOG_BUFFER.append(eventWithMeta);
+    }
+
+    source$.next(eventWithMeta);
+  };
+  emitter.event$ = source$.asObservable();
+
+  return emitter;
+}
 
 export function getLogger(tag: string, meta?: LogMetadata): Logger {
   function getNewLog(level: LogLevel, messages: ReadonlyArray<unknown>): LogEvent {
@@ -97,7 +155,7 @@ export function getLogger(tag: string, meta?: LogMetadata): Logger {
 
     messages$: logMessage.event$,
   };
-};
+}
 
 export function createLoggerFactory(...params: Parameters<typeof getLogger>): () => Logger {
   return memoize(() => getLogger(...params));

@@ -7,7 +7,7 @@ import {
   useState,
 } from 'react';
 
-import { ZeepSDK } from 'zeep-sdk/src/';
+import { ZeepSDK } from 'zeep-sdk-web/src';
 import { createEventBus, EventBus } from 'zeep-common/src/events';
 import { handleEvent } from 'zeep-common/src/query';
 import { Observable } from 'rxjs';
@@ -64,13 +64,9 @@ export const GlobalContextProvider: FC<{ children?: ReactNode }> = ({ children }
   const [state, setState] = useState<GlobalContext>(getInitialState);
 
   useEffect(() => {
-    const unsubscribe = handleEvent(state.event$, 'setSDK', ({ payload: { sdk } }) => {
+    handleEvent(state.event$, 'setSDK', ({ payload: { sdk } }) => {
       setState((prevState) => ({ ...prevState, sdk }));
     });
-
-    return () => {
-      unsubscribe();
-    };
   }, [state]);
 
   return (

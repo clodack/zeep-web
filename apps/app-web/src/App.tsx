@@ -1,7 +1,7 @@
 import { FC, useState, useEffect } from 'react';
 import { ModalsProvider } from '@salutejs/plasma-b2c';
 
-import { createWebZeepSDK, getPlatformModule } from 'zeep-sdk-web/src';
+import { createWebZeepSDK, getPlatformModule, getLogger } from 'zeep-sdk-web/src';
 
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
@@ -9,12 +9,12 @@ import './App.css'
 import { GlobalContextProvider, useGlobalContext } from './shared/contexts/globalContext';
 import { GlobalStyles } from './shared/components/GlobalStyled';
 
-type InitSDKStatus = 'fail' | 'process' | 'success';
+// type InitSDKStatus = 'fail' | 'process' | 'success';
 
 const App: FC = () => {
-  const { setSDK, eventBus } = useGlobalContext();
+  const { setSDK } = useGlobalContext();
   const [count, setCount] = useState(0);
-  const [_, setStatus] = useState<InitSDKStatus>('process');
+  // const [_, setStatus] = useState<InitSDKStatus>('process');
 
   useEffect(() => {
     console.log('Start creating sdk....');
@@ -23,14 +23,13 @@ const App: FC = () => {
       .then((sdk) => {
         console.log('SDK is created!');
         setSDK(sdk);
-        setStatus('success');
+        // setStatus('success');
       })
       .catch((error) => {
         console.error('Fail create SDK', error);
-        setStatus('fail');
-        eventBus({ type: 'error', payload: { title: 'fail create sdk' } });
+        // setStatus('fail');
       });
-  }, [setSDK, eventBus]);
+  }, [setSDK]);
 
   return (
     <>
@@ -64,6 +63,10 @@ const TestChild: FC = () => {
 
   useEffect(() => {
     if (!sdk) return;
+
+    const logger = getLogger();
+
+    logger.log('ABOB+US SKJDFLKFJDSKLFJSLK');
 
     const platform = getPlatformModule(sdk);
     console.log('____platform', platform);
