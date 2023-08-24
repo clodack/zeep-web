@@ -14,7 +14,7 @@ type InitSDKStatus = 'fail' | 'process' | 'success';
 const App: FC = () => {
   const { setSDK, eventBus } = useGlobalContext();
   const [count, setCount] = useState(0);
-  const [status, setStatus] = useState<InitSDKStatus>('process');
+  const [_, setStatus] = useState<InitSDKStatus>('process');
 
   useEffect(() => {
     console.log('Start creating sdk....');
@@ -67,6 +67,8 @@ const TestChild: FC = () => {
 
     const platform = getPlatformModule(sdk);
     console.log('____platform', platform);
+
+    // platform.windowDimensions.value$.subscribe((value) => console.log('____test', value));
   }, [sdk]);
   return null;
 }
