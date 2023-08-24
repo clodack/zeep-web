@@ -4,18 +4,18 @@ import { getLogger } from 'zeep-common/src/logger';
 import { createCoreMapController, CoreMap } from 'zeep-core-map/src';
 
 export type Runtime = {
-    coreMap: CoreMap;
+  map: CoreMap['localPositionController'];
 };
 
 export  function createRuntimeController(): Controller<Runtime> {
-    const scope = createScope();
+  const scope = createScope();
 
-    const logger = getLogger('Runtime');
+  const logger = getLogger('Runtime');
 
-    const { coreMap } = scope.createController(() => createCoreMapController({ logger }));
+  const { localPositionController } = scope.createController(() => createCoreMapController({ logger }));
 
-    return {
-        coreMap,
-        destroy: scope.destroy,
-    };
+  return {
+    map: localPositionController,
+    destroy: scope.destroy,
+  };
 }

@@ -3,33 +3,29 @@ import { Controller, createScope } from 'rx-effects';
 
 import { Logger, getLogger } from 'zeep-common/src/logger';
 
-import { createLocalLocationController } from './localLocation';
+import { createLocalLocationController, LocalLocationController } from './localLocation';
 
 export type CoreMap = {
-    test: 123
-}
+  localPositionController: LocalLocationController;
+};
 
-export type CoreMapController = Controller<{
-    coreMap: CoreMap;
-}>;
+export type CoreMapController = Controller<CoreMap>;
 
 export const CORE_MAP_TOKEN = token<CoreMap>('coreMap');
 
 export function createCoreMapController(params?: {
-    logger?: Logger;
+  logger?: Logger;
 }): CoreMapController {
-    const scope = createScope();
+  const scope = createScope();
 
-    const logger = params?.logger ?? getLogger('Map');
+  const logger = params?.logger ?? getLogger('Map');
 
-    const localPositionController = scope.createController(() => createLocalLocationController({
-        logger: logger.getLogger('localLocation'),
-    }));
+  const localPositionController = scope.createController(() => createLocalLocationController({
+    logger: logger.getLogger('localLocation'),
+  }));
 
-    return {
-        coreMap: {
-            test: 123
-        },
-        destroy: scope.destroy,
-    }
+  return {
+    localPositionController,
+    destroy: scope.destroy,
+  }
 }
