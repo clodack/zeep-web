@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "zeep-common": "*",
-    "zeep-sdk": "*",
+    "zeep-sdk-core": "*",
     "zeep-sdk-web": "*"
   },
   "devDependencies": {

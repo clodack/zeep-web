@@ -1,12 +1,9 @@
 import { createContainer, Container, token } from "ditox";
 import { Controller, createScope } from 'rx-effects';
 import { Observable } from "rxjs";
-import { enableMapSet } from 'immer';
 
 import { createEventBus } from 'zeep-common/src/events'
 import { Platform, PLATFORM_TOKEN } from 'zeep-platform/src';
-
-enableMapSet();
 
 export type ZeepSDK = Controller<{
   container: Container;
