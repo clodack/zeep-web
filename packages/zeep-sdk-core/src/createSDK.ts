@@ -1,9 +1,10 @@
-import { createContainer, Container, token } from "ditox";
+import { bindModule, createContainer, Container, token } from "ditox";
 import { Controller, createScope } from 'rx-effects';
 import { Observable } from "rxjs";
 
 import { createEventBus } from 'zeep-common/src/events'
 import { Platform, PLATFORM_TOKEN } from 'zeep-platform/src';
+import { RUNTIME_MODULE } from 'zeep-runtime/src';
 
 export type ZeepSDK = Controller<{
   container: Container;
@@ -28,6 +29,13 @@ export async function createZeepSDK(options?: ZeepSDKOptions): Promise<ZeepSDK> 
   const scope = createScope();
   const container = parentContainer ?? createContainer();
   const eventBus = createEventBus();
+
+  if (!container.hasToken(RUNTIME_MODULE.token)) {
+    bindModule(container, RUNTIME_MODULE, { scope: 'singleton' });
+  }
+  Object.values(RUNTIME_MODULE.exports ?? {}).forEach((token) => {
+    container.resolve(token);
+  });
 
   const sdk: ZeepSDK = {
     container,

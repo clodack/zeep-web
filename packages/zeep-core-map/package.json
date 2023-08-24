@@ -1,5 +1,5 @@
 {
-  "name": "zeep-runtime",
+  "name": "zeep-core-map",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,7 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "zeep-common": "*",
-    "zeep-core-map": "*"
+    "zeep-common": "*"
   }
 }

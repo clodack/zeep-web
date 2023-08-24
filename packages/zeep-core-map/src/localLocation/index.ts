@@ -1,0 +1,1 @@
+export { createLocalLocationController } from './localLocation';
