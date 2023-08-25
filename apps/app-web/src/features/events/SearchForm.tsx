@@ -41,7 +41,7 @@ const Title = styled(Headline3)`
   margin-bottom: 12px;
   text-align: center;
 
-  ${MEDIA_BREAKPOINTS.l} {
+  @media ${MEDIA_BREAKPOINTS.l} {
     text-align: left;
   }
 `
@@ -53,8 +53,12 @@ const FormSelectWrapper = styled.div`
   padding: 16px;
   box-sizing: border-box;
 
-  ${MEDIA_BREAKPOINTS.l} {
+  @media${MEDIA_BREAKPOINTS.l} {
     grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  @media${MEDIA_BREAKPOINTS.xl} {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
   }
 `;
 

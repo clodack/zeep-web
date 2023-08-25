@@ -14,8 +14,12 @@ const Wrapper = styled.div`
   grid-column-gap: 16px;
   padding: 16px;
 
-  ${MEDIA_BREAKPOINTS.l} {
+  @media ${MEDIA_BREAKPOINTS.l} {
     grid-template-columns: 1fr 1fr;
+  }
+
+  @media ${MEDIA_BREAKPOINTS.xl} {
+    grid-template-columns: 1fr 1fr 1fr;
   }
 `;
 
