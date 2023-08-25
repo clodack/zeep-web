@@ -1,10 +1,20 @@
-import { FC } from 'react';
+import { FC, useCallback } from 'react';
 import styled from 'styled-components/macro';
 import { IconClose } from '@salutejs/plasma-icons';
 import { Button, H2 } from '@salutejs/plasma-b2c';
 import { background } from '@salutejs/plasma-tokens-b2c';
 
+import { createSearchParams } from 'zeep-common/src/httpClient';
+import { getPlatformModule } from 'zeep-sdk-core/src';
+
+import { useGlobalContext } from '../../shared/contexts/globalContext';
+import { useAppDispatch } from '../../shared/hoos/redux';
+
 import { SearchForm } from './SearchForm';
+import { EventsList } from './EventsList';
+import { Filters } from './utils';
+import { setEvents } from './eventsSlize';
+import { EventsResponse } from './types';
 
 const StyledClose = styled(Button)`
   position: absolute;
@@ -23,6 +33,7 @@ const Wrapper = styled.div`
   box-sizing: border-box;
   padding: 12px 18px;
   z-index: 20;
+  overflow-Y: auto;
 `;
 
 const TitleWrapper = styled.div`
@@ -46,6 +57,23 @@ export const Events: FC<EventsProps> = ({
   isOpen,
   onClose,
 }) => {
+  const { sdk } = useGlobalContext();
+
+  const dispatch = useAppDispatch();
+
+  const handleSearch = useCallback((filters: Filters) => {
+    if (!sdk || !process.env.ZEEP_APP_EVENTS_URL) return;
+
+    const filtersString = createSearchParams(filters);
+
+    const { httpClient } = getPlatformModule(sdk);
+    
+    httpClient.get<EventsResponse>({
+      url: `${process.env.ZEEP_APP_EVENTS_URL}/list?${filtersString}`
+    }).subscribe((next) => {
+      dispatch(setEvents(next.data.list || []))
+    })
+  }, [sdk, dispatch]);
 
   if (!isOpen) return;
 
@@ -60,7 +88,8 @@ export const Events: FC<EventsProps> = ({
         <Title>Сервис событий</Title>
       </TitleWrapper>
 
-      <SearchForm />
+      <SearchForm onSearch={handleSearch} />
+      <EventsList />
     </Wrapper>
   );
 }

@@ -4,6 +4,7 @@ import styled from 'styled-components/macro';
 
 import { MapWrapper } from '../shared/components/MapWrapper';
 import { MobileActions } from '../shared/components/MobileActions';
+import { AppsModal } from '../shared/components/AppsModal';
 
 const Wrapper = styled.div`
   position: relative;
@@ -37,6 +38,7 @@ export const TabletApp: FC = () => {
       <MainContentWrapper>
         <MapWrapper />
       </MainContentWrapper>
+      <AppsModal />
     </Wrapper>
   );
 }

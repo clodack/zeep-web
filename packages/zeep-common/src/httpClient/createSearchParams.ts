@@ -9,8 +9,8 @@ export function createSearchParams(
 
   Object.entries(query).forEach(([key, value]) => {
     if (Array.isArray(value)) {
-      value.forEach((item) => searchParams.append(key, String(item)));
-    } else {
+      value.forEach((item) => item && searchParams.append(key, String(item)));
+    } else if (value) {
       searchParams.set(key, String(value));
     }
   });

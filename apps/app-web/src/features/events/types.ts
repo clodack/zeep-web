@@ -19,7 +19,7 @@ export type Range = {
 };
 
 export type FilterProces = {
-  id: string;
+  id: number;
   title: string;
   sortOrder: number;
   range: Range;
@@ -52,7 +52,7 @@ export type Organization = {
   id: string;
   name: string;
   description: string;
-  poster: string; //
+  poster?: string; //
   socials: Social[];
 };
 
@@ -81,3 +81,9 @@ export type Event = {
 };
 
 export type Events = Event[];
+
+export type EventsResponse = {
+  count: number;
+  remaining: number;
+  list: Events;
+}
