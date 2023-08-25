@@ -21,6 +21,9 @@ export type Events = Readonly<
       type: 'error';
       payload: { title: string };
     }
+  | {
+      type: 'togleAppsModal'
+    }
 >;
 
 export type GlobalContext = {

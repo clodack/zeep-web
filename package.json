@@ -22,6 +22,7 @@
   "license": "ISC",
   "dependencies": {
     "@pbe/react-yandex-maps": "^1.2.4",
+    "@reduxjs/toolkit": "^1.9.5",
     "@salutejs/plasma-b2c": "^1.221.0",
     "@salutejs/plasma-icons": "^1.155.0",
     "@salutejs/plasma-tokens-b2b": "^1.25.0",
@@ -35,6 +36,7 @@
     "nosleep.js": "^0.12.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-redux": "^8.1.2",
     "react-router-dom": "^6.15.0",
     "rx-effects": "^1.1.1",
     "rx-effects-react": "^1.1.1",

@@ -25,4 +25,4 @@ export const MEDIA_BREAKPOINTS = {
   xxl: makeMedia(BREAKPOINTS_SIZE.xxl),
 } as const;
 
-export const CSS_VH_PROPERTY = '--jazz-web-stable-vh-property';
+export const CSS_VH_PROPERTY = '--zeep-web-stable-vh-property';

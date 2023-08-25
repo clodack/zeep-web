@@ -1,26 +1,16 @@
 import { FC } from 'react';
-import { Headline2 } from '@salutejs/plasma-b2c';
-import { background, tertiary } from '@salutejs/plasma-tokens-b2c';
 import styled from 'styled-components/macro';
+import { IconApps } from '@salutejs/plasma-icons';
+import { Button } from '@salutejs/plasma-b2c';
+import { tertiary } from '@salutejs/plasma-tokens-b2c';
 
+import { AppsModal } from '../shared/components/AppsModal';
 import { MapWrapper } from '../shared/components/MapWrapper';
-
-const Title = styled(Headline2)`
-  text-align: center;
-  margin-top: 32px;
-  margin-bottom: 16px;
-`;
+import { useGlobalContext } from '../shared/contexts/globalContext';
 
 const Wrapper = styled.div`
   position: relative;
   display: flex;
-`;
-
-const Services = styled.div`
-  width: 500px;
-  height: 100vh;
-  background: ${background};
-  border-right: 2px solid ${tertiary};
 `;
 
 const MainContentWrapper = styled.div`
@@ -29,15 +19,27 @@ const MainContentWrapper = styled.div`
   position: relative;
 `;
 
+const StyledAction = styled(Button)`
+  border: 1px solid ${tertiary};
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 1;
+`;
+
 export const DesktopApp: FC = () => {
+  const { eventBus } = useGlobalContext();
+
   return (
     <Wrapper>
-      <Services>
-        <Title>Сервисы</Title>
-      </Services>
       <MainContentWrapper>
         <MapWrapper />
       </MainContentWrapper>
+      <StyledAction
+        contentLeft={<IconApps />}
+        onClick={() => eventBus({ type: 'togleAppsModal' })}
+      />
+      <AppsModal />
     </Wrapper>
   );
 }

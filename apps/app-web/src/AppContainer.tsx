@@ -1,10 +1,13 @@
 import { FC, useEffect } from 'react';
 import { ModalsProvider } from '@salutejs/plasma-b2c';
+import { Provider as ReduxProvider } from 'react-redux';
 
 import { createWebZeepSDK } from 'zeep-sdk-web/src';
 
 import { GlobalContextProvider, useGlobalContext } from './shared/contexts/globalContext';
 import { GlobalStyles } from './shared/components/GlobalStyled';
+
+import { store } from './store';
 
 import { useLayout } from './shared/hoos/useLayout';
 import { MobileApp } from './app/MobileApp';
@@ -50,8 +53,10 @@ export const AppContainer: FC = () => {
   return (
     <GlobalContextProvider>
       <ModalsProvider>
-        <GlobalStyles />
-        <AppRootSDK />
+        <ReduxProvider store={store}>
+          <GlobalStyles />
+          <AppRootSDK />
+        </ReduxProvider>
       </ModalsProvider>
     </GlobalContextProvider>
   );
