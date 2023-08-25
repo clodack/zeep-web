@@ -6,10 +6,13 @@ import { createWebZeepSDK } from 'zeep-sdk-web/src';
 import { GlobalContextProvider, useGlobalContext } from './shared/contexts/globalContext';
 import { GlobalStyles } from './shared/components/GlobalStyled';
 
-import { App } from './App';
+import { useLayout } from './shared/hoos/useLayout';
+import { MobileApp } from './app/MobileApp';
+import { TabletApp } from './app/TabletApp';
+import { DesktopApp } from './app/DesktopApp';
 
 const AppRootSDK: FC = () => {
-  const { sdk, setSDK } = useGlobalContext();
+  const { setSDK } = useGlobalContext();
 
   useEffect(() => {
     console.log('Start creating sdk....');
@@ -24,15 +27,23 @@ const AppRootSDK: FC = () => {
       });
   }, [setSDK]);
 
-  
+  return <AppRoot />;
+}
 
-  return (
-    <>
-      {sdk && (
-        <App />
-      )}
-    </>
-  )
+export const AppRoot: FC = () => {
+  const layout = useLayout();
+
+  if (!layout) return null;
+
+  if (layout === 'mobile') {
+    return <MobileApp />;
+  }
+
+  if (layout === 'tablet') {
+    return <TabletApp />;
+  }
+
+  return <DesktopApp />;
 }
 
 export const AppContainer: FC = () => {

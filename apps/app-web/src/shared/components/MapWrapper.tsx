@@ -9,11 +9,6 @@ import { filter } from 'rxjs';
 const Wrapper = styled.div`
   width: 100%;
   height: 100vh;
-
-  > * {
-    width: 100%;
-    height: 100vh;
-  }
 `;
 
 export const MapWrapper: FC = () => {
@@ -30,8 +25,6 @@ export const MapWrapper: FC = () => {
 
     const platform = getPlatformModule(sdk);
     const coreMap = getCoreMapModule(sdk);
-    
-    console.log('___coreMap', coreMap);
 
     const subscribeDefaultLocation = coreMap.permitionsState.value$
       .pipe(filter((state) => state === 'granted'))
