@@ -7,7 +7,7 @@ import {
   surfaceLiquid03,
   transparent,
 } from '@salutejs/plasma-tokens-b2c';
-import { dark } from '@salutejs/plasma-tokens-b2c/themes';
+import { light } from '@salutejs/plasma-tokens-b2c/themes';
 import { b2c } from '@salutejs/plasma-tokens-b2c/typo';
 import {
   compatible as compatibleTypo,
@@ -16,7 +16,7 @@ import {
 
 import { createGlobalStyle } from 'styled-components';
 
-const PlasmaStyle = createGlobalStyle(dark, compatibleTypo, b2c, standartTypo);
+const PlasmaStyle = createGlobalStyle(light, compatibleTypo, b2c, standartTypo);
 
 
 const ScrollBarsStyle = createGlobalStyle`

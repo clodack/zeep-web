@@ -37,9 +37,7 @@ export function getContainsPageLayoutBreakpoint(
 
   currentBreakpoints.value$.subscribe((newState) => {
     state.set(BREAKPOINTS_SIZE[breakpoint] > BREAKPOINTS_SIZE[newState])
-  })
-
-  state.value$.subscribe((test) => console.log('______upgr___', breakpoint, test));
+  });
 
   return state;
 }
@@ -50,7 +48,7 @@ export function getIsMobile(sdk: ZeepSDK): Query<boolean> {
 
 export function getIsTablet(sdk: ZeepSDK): Query<boolean> {
   const smallMobile = getContainsPageLayoutBreakpoint(sdk, 'm');
-  const smallDesktop = getContainsPageLayoutBreakpoint(sdk, 'l');
+  const smallDesktop = getContainsPageLayoutBreakpoint(sdk, 'xl');
 
   function check(): boolean {
     return !smallMobile.get() && smallDesktop.get();
@@ -65,7 +63,7 @@ export function getIsTablet(sdk: ZeepSDK): Query<boolean> {
 }
 
 export function getIsDesktop(sdk: ZeepSDK): Query<boolean> {
-  const isTablet = getContainsPageLayoutBreakpoint(sdk, 'l');
+  const isTablet = getContainsPageLayoutBreakpoint(sdk, 'xl');
 
   return mapQuery(isTablet, (isTablet) => !isTablet);
 }
