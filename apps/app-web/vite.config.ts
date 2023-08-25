@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import macrosPlugin from 'vite-plugin-babel-macros';
 
 import { getClientEnvironments} from 'zeep-scripts/env.mjs';
 
@@ -8,9 +9,12 @@ export default () => {
   const { stringified: envs } = getClientEnvironments();
 
   return defineConfig({
-    plugins: [react()],
+    plugins: [
+      react(),
+      macrosPlugin(),
+    ],
     define: {
       ...envs,
-    }
+    },
   });
 }

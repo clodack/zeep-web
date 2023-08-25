@@ -1,8 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 
-import { AppContainer } from './App.tsx'
-import './index.css'
+import { AppContainer } from './AppContainer';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

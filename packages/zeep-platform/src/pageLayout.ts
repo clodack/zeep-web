@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs';
+import { Query } from 'rx-effects';
 
 import { ExtractEnum } from 'zeep-common/src/utilityTypes';
 
@@ -21,6 +21,6 @@ export const ORIENTATION_ENUM = {
 export type Orientation = ExtractEnum<typeof ORIENTATION_ENUM>;
 
 export type PageLayoutService = {
-  breakpoints: Observable<Breakpoints>;
-  orientation: Observable<Orientation>;
+  breakpoints: Query<Breakpoints>;
+  orientation: Query<Orientation>;
 };

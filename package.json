@@ -21,6 +21,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@pbe/react-yandex-maps": "^1.2.4",
     "@salutejs/plasma-b2c": "^1.221.0",
     "@salutejs/plasma-icons": "^1.155.0",
     "@salutejs/plasma-tokens-b2b": "^1.25.0",
@@ -46,7 +47,7 @@
     "@types/lodash": "^4.14.197",
     "@types/node": "^20.5.1",
     "@types/node-static": "^0.7.7",
-    "@types/react": "^18.2.15",
+    "@types/react": "^18.2.21",
     "@types/react-dom": "^18.2.7",
     "@types/react-router-dom": "^5.3.3",
     "@types/styled-components": "^5.1.26",
@@ -61,6 +62,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
     "typescript": "^5.0.2",
-    "vite": "^4.4.5"
+    "vite": "^4.4.5",
+    "vite-plugin-babel-macros": "^1.0.6"
   }
 }

@@ -57,7 +57,7 @@ export function createLocalLocationController(params: {
     });
 
     if (permitions === 'granted' || permitions === 'prompt') {
-      logger.info(`Permitions granted ${permitions}`);
+      logger.info(`Permitions ${permitions}`);
       idWatcher$.set(startWatchPosition());
     }
 

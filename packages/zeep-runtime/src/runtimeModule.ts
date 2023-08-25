@@ -8,6 +8,6 @@ export const RUNTIME_MODULE = declareModule<Runtime>({
   imports: [],
   factory: injectable(createRuntimeController),
   exports: {
-    coreMap: CORE_MAP_TOKEN
+    map: CORE_MAP_TOKEN
   }
 });

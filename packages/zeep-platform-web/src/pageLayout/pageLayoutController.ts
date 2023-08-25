@@ -4,28 +4,33 @@ import { map, throttleTime } from 'rxjs';
 import { WindowDimensions } from 'zeep-platform/src';
 
 import { getBreakpoints, getOrientation, setCssVhProperty } from './utils';
-import type { PageLayoutService } from 'zeep-platform/src/pageLayout';
+import type { PageLayoutService, Breakpoints, Orientation } from 'zeep-platform/src/pageLayout';
 
 export function createPageLayoutController(
   dimentions$: Query<WindowDimensions>
 ): Controller<PageLayoutService> {
   const scope = createScope();
 
-  const layout$ = dimentions$.value$.pipe(
+  const breakpoints = scope.createStore<Breakpoints>(getBreakpoints());
+  const orientation = scope.createStore<Orientation>(getOrientation());
+
+  const subscription = scope.subscribe(dimentions$.value$.pipe(
     throttleTime(150, undefined, { trailing: true }),
     map(() => {
       setCssVhProperty();
 
-      return {
-        breakpoints: getBreakpoints(),
-        orientation: getOrientation(),
-      };
+      breakpoints.set(getBreakpoints());
+      orientation.set(getOrientation());
     }),
-  );
+  ));
+
+  scope.add(() => {
+    subscription.unsubscribe();
+  });
 
   return {
-    breakpoints: layout$.pipe(map(({ breakpoints }) => breakpoints)),
-    orientation: layout$.pipe(map(({ orientation }) => orientation)),
+    breakpoints,
+    orientation,
 
     destroy: scope.destroy,
   };

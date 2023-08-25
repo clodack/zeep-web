@@ -11,7 +11,7 @@ export type CoreMap = {
 
 export type CoreMapController = Controller<CoreMap>;
 
-export const CORE_MAP_TOKEN = token<CoreMap>('coreMap');
+export const CORE_MAP_TOKEN = token<LocalLocationController>('coreMap');
 
 export function createCoreMapController(params?: {
   logger?: Logger;
