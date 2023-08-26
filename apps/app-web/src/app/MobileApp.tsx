@@ -31,11 +31,11 @@ const MainContentWrapper = styled.div`
 export const MobileApp: FC = () => {
   return (
     <Wrapper>
-      <AppsModal />
       <MainContentWrapper>
         <MapWrapper />
         <VideoElement />
         <Media />
+        <AppsModal />
       </MainContentWrapper>
       <Actions>
         <MobileActions />

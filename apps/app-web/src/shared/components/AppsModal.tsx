@@ -1,8 +1,7 @@
 import { FC, useState, useEffect } from 'react';
 import styled from 'styled-components/macro';
-import { IconClose } from '@salutejs/plasma-icons';
-import { Button, H2 } from '@salutejs/plasma-b2c';
-import { background } from '@salutejs/plasma-tokens-b2c';
+import { H2 } from '@salutejs/plasma-b2c';
+import { backgroundPrimary } from '@salutejs/plasma-tokens-b2c';
 import { handleEvent } from 'zeep-common/src/query';
 
 import { useGlobalContext } from '../contexts/globalContext';
@@ -13,17 +12,21 @@ import { AppCard } from './AppCard';
 const AppsList = styled.div<{
   'data-visible'?: boolean;
 }>`
-  background: ${background};
-  opacity: 0;
-  width: 100%;
   height: 100%;
-  position: fixed;
+  width: 100%;
+  z-index: 10;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: ${backgroundPrimary};
+  display: flex;
+  justify-content: center;
+  align-items: center;
   display: none;
+  padding: 0 12px;
+  box-sizing: border-box;
 
   &[data-visible] {
-    transition: .5s;
-    opacity: 1;
-    z-index: 2;
     display: block;
   }
 `;
@@ -34,12 +37,6 @@ const TitleWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-`;
-
-const StyledClose = styled(Button)`
-  position: absolute;
-  right: 12px;
-  top: 12px;
 `;
 
 const Title = styled(H2)`
@@ -74,11 +71,6 @@ export const AppsModal: FC = () => {
   return (
     <AppsList data-visible={isOpenMenu || undefined}>
       <TitleWrapper>
-        <StyledClose
-          contentLeft={<IconClose />}
-          view="clear"
-          onClick={() => setIsOpenMenu(false)}
-        />
         <Title>Сервисы</Title>
       </TitleWrapper>
       <Services>

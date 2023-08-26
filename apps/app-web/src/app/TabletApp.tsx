@@ -39,10 +39,10 @@ export const TabletApp: FC = () => {
       </Actions>
       <MainContentWrapper>
         <MapWrapper />
+        <AppsModal />
         <VideoElement />
         <Media />
       </MainContentWrapper>
-      <AppsModal />
     </Wrapper>
   );
 }
