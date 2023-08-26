@@ -22,8 +22,17 @@ export type Events = Readonly<
       payload: { title: string };
     }
   | {
-      type: 'togleAppsModal'
+      type: 'togleAppsModal',
+      payload: {
+        isOpen: boolean;
+      }
     }
+  | {
+    type: 'toggleCamera',
+    payload: {
+      isOpen: boolean;
+    }
+  }
 >;
 
 export type GlobalContext = {

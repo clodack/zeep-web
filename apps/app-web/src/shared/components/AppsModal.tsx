@@ -62,8 +62,8 @@ export const AppsModal: FC = () => {
   const [isOpoenEvents, setIsOpenEvents] = useState(false);
 
   useEffect(() => {
-    const unsubscribe = handleEvent(event$, 'togleAppsModal', () => {
-      setIsOpenMenu((oldState) => !oldState);
+    const unsubscribe = handleEvent(event$, 'togleAppsModal', ({ payload }) => {
+      setIsOpenMenu(payload.isOpen);
     });
 
     return () => {

@@ -31,9 +31,9 @@ export const MobileApp: FC = () => {
   return (
     <Wrapper>
       <AppsModal />
-      <VideoElement />
       <MainContentWrapper>
         <MapWrapper />
+        <VideoElement />
       </MainContentWrapper>
       <Actions>
         <MobileActions />

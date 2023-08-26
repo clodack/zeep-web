@@ -35,6 +35,9 @@ export function createVideoController(): Controller<VideoController> {
     stream$.get()?.getVideoTracks().forEach((track) => {
       track.stop();
     })
+    stream$.get()?.getAudioTracks().forEach((track) => {
+      track.stop();
+    })
   }
 
   return {
