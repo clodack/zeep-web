@@ -28,11 +28,17 @@ export type Events = Readonly<
       }
     }
   | {
-    type: 'toggleCamera',
-    payload: {
-      isOpen: boolean;
+      type: 'toggleCamera',
+      payload: {
+        isOpen: boolean;
+      }
     }
-  }
+  | {
+      type: 'toggleReelse',
+      payload: {
+        isOpen: boolean;
+      }
+    }
 >;
 
 export type GlobalContext = {

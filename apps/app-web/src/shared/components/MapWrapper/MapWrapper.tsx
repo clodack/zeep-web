@@ -76,8 +76,6 @@ const InnterComponent: FC = () => {
     const subscription = platform.windowDimensions.value$.subscribe(() => {
       if (!ref.current) return;
 
-      console.log('____aaaa______');
-
       setWidth(ref.current.offsetWidth);
       setHeight(ref.current.offsetHeight);
     });
