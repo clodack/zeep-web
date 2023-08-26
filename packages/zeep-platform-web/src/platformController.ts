@@ -32,7 +32,9 @@ export function createPlatformController(): Controller<{ platform: Platform }> {
     logger: logger.getLogger('httpClient')
   }));
 
-  const video = scope.createController(() => createVideoController());
+  const video = scope.createController(() => createVideoController({
+    logger: logger.getLogger('videoController')
+  }));
 
   return {
     platform: {

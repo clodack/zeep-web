@@ -45,7 +45,8 @@ const InnterComponent: FC = () => {
     const mapChannel = getMapChannel(sdk);
 
     if (map) {
-      mapChannel.startChannel();
+      // @TODO
+      // mapChannel.startChannel();
 
       const { latitude, longitude } = coreMap.coords.get();
 

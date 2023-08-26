@@ -1,4 +1,5 @@
 import { Controller, createScope, Query } from 'rx-effects';
+import { Logger } from 'zeep-common/src/logger';
 
 export type VideoController = {
   playVideo: () => void;
@@ -12,19 +13,25 @@ const CONTRAINS = {
   video: { width: 950, height: 720 },
 };
 
-export function createVideoController(): Controller<VideoController> {
+export type VideoControllerProps = {
+  logger: Logger;
+}
+
+export function createVideoController({ logger }: VideoControllerProps): Controller<VideoController> {
   const scope = createScope();
 
   const stream$ = scope.createStore<MediaStream | undefined>(undefined);
   
 
   function playVideo(): void {
+    logger.info('Run play video');
     navigator.mediaDevices
       .getUserMedia(CONTRAINS)
       .then((mediaStream) => {
         stream$.set(mediaStream);
       })
       .catch((err) => {
+        logger.error('Error get permichins', err);
         // always check for errors at the end.
         console.error(`${err.name}: ${err.message}`);
         stream$.set(undefined);
@@ -32,6 +39,8 @@ export function createVideoController(): Controller<VideoController> {
   }
 
   function stopVideo(): void {
+    logger.info('stop video stream');
+
     stream$.get()?.getVideoTracks().forEach((track) => {
       track.stop();
     })

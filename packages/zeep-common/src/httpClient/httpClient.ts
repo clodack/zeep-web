@@ -176,6 +176,8 @@ export function createHttpClient(
   const logger = params?.logger;
   const baseRequestConfig = params?.requestConfig ?? NOOP_REQUEST_TRANSFORMER;
 
+  logger?.info('HTTP client is created');
+
   const scope = createScope();
 
   const isDestroyedSubject = new BehaviorSubject(false);
