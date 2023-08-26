@@ -37,7 +37,7 @@ export const DesktopApp: FC = () => {
       </MainContentWrapper>
       <StyledAction
         contentLeft={<IconApps />}
-        onClick={() => eventBus({ type: 'togleAppsModal' })}
+        onClick={() => eventBus({ type: 'togleAppsModal', payload: { isOpen: true } })}
       />
       <AppsModal />
     </Wrapper>
