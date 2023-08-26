@@ -2,11 +2,12 @@ import { Controller, createScope } from "rx-effects";
 
 import { Platform } from 'zeep-platform/src/platform';
 import { createHttpClient } from 'zeep-common/src/httpClient';
+import { getLogger } from "zeep-common/src/logger";
 
 import { createPageLayoutController } from './pageLayout';
 import { createWebStorageController } from './storage';
 import { createWindowDimensionsController } from './windowSizeController';
-import { getLogger } from "zeep-common/src/logger";
+import { createVideoController } from "./video";
 
 export function createPlatformController(): Controller<{ platform: Platform }> {
   const scope = createScope();
@@ -31,11 +32,15 @@ export function createPlatformController(): Controller<{ platform: Platform }> {
     logger: logger.getLogger('httpClient')
   }));
 
+  const video = scope.createController(() => createVideoController());
+
   return {
     platform: {
       target: 'web',
 
       httpClient,
+
+      video,
     
       localStorage,
       sessionStorage,

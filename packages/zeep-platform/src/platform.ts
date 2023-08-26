@@ -6,6 +6,7 @@ import { HttpClient } from 'zeep-common/src/httpClient';
 import { Breakpoints, Orientation } from './pageLayout';
 import { KeyValueStorage } from './storage';
 import { WindowDimensions } from './windowDimensions';
+import {VideoController } from './video';
 
 export type Target = 'web' | 'desktop' | 'mobile';
 
@@ -13,6 +14,8 @@ export type Platform = {
   target: Target;
 
   httpClient: HttpClient;
+
+  video: VideoController;
 
   localStorage: KeyValueStorage;
   sessionStorage: KeyValueStorage;
