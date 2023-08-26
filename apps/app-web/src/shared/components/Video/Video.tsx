@@ -21,6 +21,7 @@ const Wrapper = styled.div<{
   justify-content: center;
   align-items: center;
   display: none;
+  overflow: hidden;
 
   &[data-visible] {
     display: block;
