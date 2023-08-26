@@ -1,13 +1,15 @@
 import { FC, useState, useEffect } from 'react';
 import styled from 'styled-components/macro';
-import { H2 } from '@salutejs/plasma-b2c';
+import { IconClose } from '@salutejs/plasma-icons';
+import { Button, H2 } from '@salutejs/plasma-b2c';
 import { backgroundPrimary } from '@salutejs/plasma-tokens-b2c';
-import { handleEvent } from 'zeep-common/src/query';
+import { handleEvent, handleQueryChanges } from 'zeep-common/src/query';
 
 import { useGlobalContext } from '../contexts/globalContext';
 import { Events } from '../../features/events';
 
 import { AppCard } from './AppCard';
+import { getIsDesktop } from 'zeep-sdk-core/src';
 
 const AppsList = styled.div<{
   'data-visible'?: boolean;
@@ -39,6 +41,12 @@ const TitleWrapper = styled.div`
   justify-content: center;
 `;
 
+const StyledClose = styled(Button)`
+  position: absolute;
+  right: 12px;
+  top: 12px;
+`;
+
 const Title = styled(H2)`
   margin: 16px 0 32px 0;
 `;
@@ -53,10 +61,27 @@ const Services = styled.div`
 `;
 
 export const AppsModal: FC = () => {
-  const { event$ } = useGlobalContext();
+  const { event$, sdk } = useGlobalContext();
   const [isOpenMenu, setIsOpenMenu] = useState(false);
 
   const [isOpoenEvents, setIsOpenEvents] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    if (!sdk) return;
+
+    const isDesktop = getIsDesktop(sdk);
+
+    setIsDesktop(isDesktop.get());
+
+    const unsubscribe = handleQueryChanges(isDesktop, (isDesktop) => {
+      setIsDesktop(isDesktop);
+    });
+
+    return () => {
+      unsubscribe();
+    }
+  }, [sdk]);
 
   useEffect(() => {
     const unsubscribe = handleEvent(event$, 'togleAppsModal', ({ payload }) => {
@@ -71,6 +96,13 @@ export const AppsModal: FC = () => {
   return (
     <AppsList data-visible={isOpenMenu || undefined}>
       <TitleWrapper>
+        {isDesktop && (
+          <StyledClose
+            contentLeft={<IconClose />}
+            view="clear"
+            onClick={() => setIsOpenMenu(false)}
+          />
+        )}
         <Title>Сервисы</Title>
       </TitleWrapper>
       <Services>
